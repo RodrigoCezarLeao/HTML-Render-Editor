@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<title>Meu Editor</title>
+
+	<style type="text/css">
+		/*body {display: flex; justify-content: center; align-items: center;}
+		div#tudo {display: inline-flex; border: 1px solid yellow; padding: 10px}*/
+
+		body{width: 100%; margin: 0 auto;}
+		div#tudo {width: 80%; margin: 30px auto; position: relative; text-align: center;}
+
+		div#tela {border: 1px solid black; width: 500px; height: 500px; display: inline-block; overflow: scroll; text-align: left; margin: 10px; position: relative; top: 14px; padding: 0px 5px; border-radius: 5px;}
+
+		div#codigo {border: 1px solid black; width: 500px; height: 500px; display: inline-block; margin: 10px; border-radius: 5px;}
+		div#codigo textarea {width: 498px; height:498px; resize:none; border: 0px}
+
+		button {position: relative; top: -250px;}
+		label {position: relative; top:-505px; right: -315px; font-style: bold; font-size: 2em;}
+		
+
+
+		pre.script {background: grey; color: white; padding: 5px; font-family: monospace; font-weight: bold;}
+	</style>
+
+</head>
+<body>
+
+	<div id="tudo">
+
+		<label>Exibição</label>
+		<div id="tela">
+			
+		</div>
+
+		<!-- <button onclick="renderizar()">Renderizar</button> -->
+
+		<label>Editor</label>
+		<div id="codigo">
+			<textarea id="code" onkeyup="renderizar()">
+				
+			</textarea>
+		</div>
+		
+
+
+		<details>
+			<summary>Tips</summary>
+			<p>& nbsp ; -> 1 espaço</p>
+			<p>& ensp ; -> tabulação 2 espaços</p>			
+			<p>& emsp ; -> tabulação 4 espaços</p>
+			<p>& gt ; -> sinal de ></p>
+			<p>& lt ; -> sinal de <</p>
+		</details>
+	</div>
+
+	<script type="text/javascript">
+		function renderizar()
+		{			
+			document.getElementById("tela").innerHTML = document.getElementById("code").value;
+		}
+
+
+		
+		document.querySelector("textarea").addEventListener('keydown',function(e) {				
+		    	if (e.keyCode === 9){ // tab was pressed
+			        // get caret position/selection
+			        var start = this.selectionStart;
+			        var end = this.selectionEnd;
+
+			        var target = e.target;
+			        var value = target.value;
+
+			        // set textarea value to: text before caret + tab + text after caret
+			        target.value = value.substring(0, start)
+			                    + "    "
+			                    + value.substring(end);
+
+			        // put caret at right position again (add one for the tab)
+			        this.selectionStart = this.selectionEnd = start + 4;
+
+			        // prevent the focus lose
+			        e.preventDefault();
+		    	}
+		    
+		    	
+		    	
+		},false);		
+	</script>
+
+
+	<!-- 
+	<h1>TKinter - GUI do Python</h1>
+
+	<ul>
+	    <li><a href="#">Instalação</a></li>
+	    
+	</ul>
+
+	<pre class="script">
+	#Python 3.8.3
+
+	from flask import Flask
+
+	app = Flask(__name__)
+
+	@app.route('/')
+	def index():
+	    return '&lt;h1&gt;Hello World!&lt;\h1&gt;'
+
+
+	app.run(debug=True)
+	
+	</pre>    
+ 	-->
+</body>
+</html>
