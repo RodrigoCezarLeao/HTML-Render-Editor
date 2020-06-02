@@ -5,64 +5,59 @@
 	<title>Meu Editor</title>
 
 	<style type="text/css">
-		/*body {display: flex; justify-content: center; align-items: center;}
-		div#tudo {display: inline-flex; border: 1px solid yellow; padding: 10px}*/
-
-		body{width: 100%; margin: 0 auto;}
-		div#tudo {width: 80%; margin: 30px auto; position: relative; text-align: center;}
-
-		div#tela {border: 1px solid black; width: 500px; height: 500px; display: inline-block; overflow: scroll; text-align: left; margin: 10px; position: relative; top: 14px; padding: 0px 5px; border-radius: 5px;}
-
-		div#codigo {border: 1px solid black; width: 500px; height: 500px; display: inline-block; margin: 10px; border-radius: 5px;}
-		div#codigo textarea {width: 498px; height:498px; resize:none; border: 0px}
-
-		button {position: relative; top: -250px;}
-		label {position: relative; top:-505px; right: -315px; font-style: bold; font-size: 2em;}
-		
+		/* GERAL */
+		body {margin: 0px auto; padding: 0; border: 0; display: block; background-color:#77748b; font-family: Verdana; text-align: center; position: relative;}
 
 
-		pre.script {background: grey; color: white; padding: 5px; font-family: monospace; font-weight: bold;}
+		/* Interface Editor */		
+		div.container { width: 45%; display: inline-block; height: 600px; border: 1px solid black; border-radius: 10px; margin: 2%; background-color: #e0e0e0; position: relative;}
+		div.container h3 {font-size: 1.5em; color: #413f4b;}
+		hr.padrão {color: #413f4b; border: 2px solid #413f4b;}
+
+
+		/* Tela (Render) Editor */
+		div#exibir {border: 3px solid #77748b; width: 85%; height: 500px; border-radius: 1px; margin: 0 auto; text-align: left; position: absolute; left: 6.5%; background: #fff;}
+
+
+		/* Edição (editor) Editor */
+		textarea#editar {border: 3px solid #77748b; width: 85%; height: 500px; border-radius: 1px; margin: 0 auto; display: block; resize: none; position: absolute; left: 6.5%; font-family: monospace;}
+
+
 	</style>
 
 </head>
 <body>
 
-	<div id="tudo">
+	
+	<div class="container" id="tela">
+		<h3>Exibição</h3>
+		<hr class="padrão">
 
-		<label>Exibição</label>
-		<div id="tela">
+		<div id="exibir">
 			
 		</div>
-
-		<!-- <button onclick="renderizar()">Renderizar</button> -->
-
-		<label>Editor</label>
-		<div id="codigo">
-			<textarea id="code" onkeyup="renderizar()">
-				
-			</textarea>
-		</div>
-		
-
-
-		<details>
-			<summary>Tips</summary>
-			<p>& nbsp ; -> 1 espaço</p>
-			<p>& ensp ; -> tabulação 2 espaços</p>			
-			<p>& emsp ; -> tabulação 4 espaços</p>
-			<p>& gt ; -> sinal de ></p>
-			<p>& lt ; -> sinal de <</p>
-		</details>
 	</div>
+
+
+	<div class="container" id="edição">
+		<h3>Edição</h3>
+		<hr class="padrão">
+
+		<textarea id="editar">
+			
+		</textarea>
+	</div>
+	
+
 
 	<script type="text/javascript">
 		function renderizar()
-		{			
-			document.getElementById("tela").innerHTML = document.getElementById("code").value;
+		{
+			document.getElementById("exibir").innerHTML = document.getElementById("editar").value
 		}
+		document.getElementById("editar").addEventListener("keyup", renderizar, false);
 
 
-		
 		document.querySelector("textarea").addEventListener('keydown',function(e) {				
 		    	if (e.keyCode === 9){ // tab was pressed
 			        // get caret position/selection
@@ -86,33 +81,8 @@
 		    
 		    	
 		    	
-		},false);		
+		},false);
+		document.getElementById('editar').value = "";
 	</script>
-
-
-	<!-- 
-	<h1>TKinter - GUI do Python</h1>
-
-	<ul>
-	    <li><a href="#">Instalação</a></li>
-	    
-	</ul>
-
-	<pre class="script">
-	#Python 3.8.3
-
-	from flask import Flask
-
-	app = Flask(__name__)
-
-	@app.route('/')
-	def index():
-	    return '&lt;h1&gt;Hello World!&lt;\h1&gt;'
-
-
-	app.run(debug=True)
-	
-	</pre>    
- 	-->
 </body>
 </html>
