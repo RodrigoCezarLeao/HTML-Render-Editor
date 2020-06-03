@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<title>HTML-Render-Editor</title>
+
+	<style type="text/css">
+		/* GERAL */
+		body {margin: 0px auto; padding: 0; border: 0; display: block; background-color:#77748b; font-family: Verdana; text-align: center; position: relative;}
+
+
+		/* Interface Editor */		
+		div.container { width: 46%; display: inline-block; height: 600px; border: 1px solid black; border-radius: 10px; margin: 1%; background-color: #e0e0e0; position: relative;}
+		div.container h3 {font-size: 1.5em; color: #413f4b;}
+		hr.padrão {color: #413f4b; border: 2px solid #413f4b;}
+
+
+
+		/* Tela (Render) Editor */
+		div#exibir {border: 3px solid #77748b; width: 95%; height: 500px; border-radius: 1px; margin: 0 auto; text-align: left; position: absolute; left: 2%; background: #fff; font-size: 0.8em;}
+		button#vis {position: absolute; z-index: 3; top: 9%; left: 1%; border-radius: 5px; cursor: pointer; background: #413f4b; color: #fff; font-weight: bold; padding: 0 5%;}
+		button#vis:hover {background: #77748b; color: #413f4b}
+
+
+		/* Edição (editor) Editor */
+		textarea#editar {border: 3px solid #77748b; width: 95%; height: 500px; border-radius: 1px; margin: 0 auto; display: block; resize: none; position: absolute; left: 2%; font-family: monospace;}
+
+
+	</style>
+
+</head>
+<body>
+
+	
+	<div class="container" id="tela">
+		<h3>Screen</h3>
+		<hr class="padrão">
+
+		<button id="vis" onclick="visualizar()">Visualize</button>
+
+		<div id="exibir">
+			
+		</div>
+	</div>
+
+
+	<div class="container" id="edição">
+		<h3>Editor</h3>
+		<hr class="padrão">
+
+		<button id="vis" onclick="limpar()">Clear</button>
+
+		<textarea id="editar">
+			
+		</textarea>
+	</div>
+	
+
+
+	<script type="text/javascript">
+		function renderizar()
+		{
+			var codigo = document.getElementById("editar").value
+			codigo = codigo.replace("body", "div#exibir")
+			document.getElementById("exibir").innerHTML = codigo
+		}
+		document.getElementById("editar").addEventListener("keyup", renderizar, false);
+
+
+		function visualizar()
+		{
+			var win = window.open()
+			win.document.body.innerHTML = document.getElementById("editar").value
+		}
+
+		function limpar()
+		{
+			document.getElementById("editar").value = ""
+			renderizar()
+		}
+
+
+		document.querySelector("textarea").addEventListener('keydown',function(e) {				
+		    	if (e.keyCode === 9){ // tab was pressed
+			        // get caret position/selection
+			        var start = this.selectionStart;
+			        var end = this.selectionEnd;
+
+			        var target = e.target;
+			        var value = target.value;
+
+			        // set textarea value to: text before caret + tab + text after caret
+			        target.value = value.substring(0, start)
+			                    + "    "
+			                    + value.substring(end);
+
+			        // put caret at right position again (add one for the tab)
+			        this.selectionStart = this.selectionEnd = start + 4;
+
+			        // prevent the focus lose
+			        e.preventDefault();
+		    	}
+		    
+		    	
+		    	
+		},false);
+		//document.getElementById('editar').value = "";
+		document.getElementById('editar').value = 
+`<style>
+	body {background-image: linear-gradient( black, #555); 
+	background-attachment:fixed; color:#fff; text-align:center;}
+
+</style>
+
+<h1>HTML-Render-Editor</h1>
+<hr>
+<p>Edit your HTML files, with CSS and JS support.</p>
+<p>Totally free to use, just get it!</p>`;
+
+		renderizar();
+	</script>
+</body>
+</html>
