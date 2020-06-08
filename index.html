@@ -1,123 +1,196 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
 	<meta charset="utf-8">
-	<title>HTML-Render-Editor</title>
-
+	<title>Rich Text Editor</title>
 	<style type="text/css">
-		/* GERAL */
-		body {margin: 0px auto; padding: 0; border: 0; display: block; background-color:#77748b; font-family: Verdana; text-align: center; position: relative;}
+		
+		div#textEditor{margin:0 auto; width: 900px; height: 300px;}
+		div#theRibbon{border-bottom: none; padding: 10px; background: #302b4a; color:#fff; border-radius: 8px 8px 0px 0px;}
+		div#richTextArea{border: 2px solid #302b4a; height: 800px; width: 896px;}
+		iframe#theWYSIWYG {height: 100%; width: 100%;}
+		div#theRibbon > button {color:#fff; border: none; outline: none; background-color: transparent; cursor: pointer;}
+		div#theRibbon > button:hover {background-color: rgb(20,90,70); transition: all 0.3s linear 0s;}
 
-
-		/* Interface Editor */		
-		div.container { width: 46%; display: inline-block; height: 600px; border: 1px solid black; border-radius: 10px; margin: 1%; background-color: #e0e0e0; position: relative;}
-		div.container h3 {font-size: 1.5em; color: #413f4b;}
-		hr.padrão {color: #413f4b; border: 2px solid #413f4b;}
-
-
-
-		/* Tela (Render) Editor */
-		div#exibir {border: 3px solid #77748b; width: 95%; height: 500px; border-radius: 1px; margin: 0 auto; text-align: left; position: absolute; left: 2%; background: #fff; font-size: 0.8em;}
-		button#vis {position: absolute; z-index: 3; top: 9%; left: 1%; border-radius: 5px; cursor: pointer; background: #413f4b; color: #fff; font-weight: bold; padding: 0 5%;}
-		button#vis:hover {background: #77748b; color: #413f4b}
-
-
-		/* Edição (editor) Editor */
-		textarea#editar {border: 3px solid #77748b; width: 95%; height: 500px; border-radius: 1px; margin: 0 auto; display: block; resize: none; position: absolute; left: 2%; font-family: monospace;}
-
+		input[type="color"] {border: none; outline: none; background-color: transparent;}
+		
 
 	</style>
 
+
+	<script type="text/javascript">
+		window.addEventListener("load", function(){
+			var editor = theWYSIWYG.document;
+			editor.designMode = "on";
+
+			boldButton.addEventListener("click", function(){
+				editor.execCommand("Bold", false, null);
+			},false);
+
+
+			italicButton.addEventListener("click", function(){
+				editor.execCommand("Italic", false, null);
+			},false);
+
+			underlineButton.addEventListener("click", function(){
+				editor.execCommand("Underline", false, null);
+			},false);
+
+
+			strikeButton.addEventListener("click", function(){
+				editor.execCommand("Strikethrough", false, null);
+			},false);
+
+
+			leftButton.addEventListener("click", function(){
+				editor.execCommand("justifyLeft", false, null);
+			},false);
+
+			rightButton.addEventListener("click", function(){
+				editor.execCommand("justifyRight", false, null);
+			},false);
+
+			centerButton.addEventListener("click", function(){
+				editor.execCommand("justifyCenter", false, null);
+			},false);
+
+			justifyButton.addEventListener("click", function(){
+				editor.execCommand("justifyFull", false, null);
+			},false);
+
+
+			separatorButton.addEventListener("click", function(){
+				editor.execCommand("insertHTML", false, "<hr>&nbsp;");
+			},false);
+
+
+			ident.addEventListener("click", function(){
+				editor.execCommand("indent", false, null);
+			},false);
+
+			outdent.addEventListener("click", function(){
+				editor.execCommand("outdent", false, null);
+			},false);
+
+			code.addEventListener("click", function(){
+				editor.execCommand("insertHTML", false, "&nbsp;<div style='width:730px; background:#555; color:#fff; font-family:Monospace;line-height:20px; padding:0px 5px;'>-</div>&nbsp;");
+			},false);
+
+
+			supButton.addEventListener("click", function(){
+				editor.execCommand("Superscript", false, null);
+			},false);
+
+			subButton.addEventListener("click", function(){
+				editor.execCommand("Subscript", false, null);
+			},false);
+
+
+			orderedListButton.addEventListener("click", function(){
+				editor.execCommand("InsertOrderedList", false, "new" + Math.round(Math.random() * 1000 ));
+			},false);
+
+			unorderedListButton.addEventListener("click", function(){
+				editor.execCommand("InsertUnorderedList", false, "new" + Math.round(Math.random() * 1000 ));
+			},false);
+
+			fontColorButton.addEventListener("change", function(event){
+				editor.execCommand("ForeColor", false, event.target.value);
+			}, false);
+
+			highlightButton.addEventListener("change", function(event){
+				editor.execCommand("BackColor", false, event.target.value);
+			}, false);
+
+			fontChanger.addEventListener("change", function(event){
+				editor.execCommand("FontName", false, event.target.value);
+			}, false);
+
+			fontSizeChanger.addEventListener("change", function(event){
+				editor.execCommand("FontSize", false, event.target.value);
+			}, false);
+			
+			undoButton.addEventListener("click", function(){
+				editor.execCommand("undo", false, null);
+			}, false);
+
+			redoButton.addEventListener("click", function(){
+				editor.execCommand("redo", false, null);
+			}, false);
+
+
+			
+					    	
+
+		}, false);
+
+
+
+		//window.frames["theWYSIWYG"].document.body.innerHTML
+
+	</script>
 </head>
 <body>
 
-	
-	<div class="container" id="tela">
-		<h3>Screen</h3>
-		<hr class="padrão">
+	<div id="textEditor">
+		<div id="theRibbon">
+			<button id="boldButton" title="Bold"><b>B</b></button>
+			<button id="italicButton" title="Italic"><em>I</em></button>
+			<button id="underlineButton" title="Underline"><u>U</u></button>
+			<button id="strikeButton" title="Strikethrough"><s>ABC</s></button>
+			<button id="leftButton" title="Left align">L</button>
+			<button id="rightButton" title="Right align">R</button>
+			<button id="centerButton" title="Center align">C</button>
+			<button id="justifyButton" title="Justify align">J</button>
+			<button id="separatorButton" title="Separator">_</button>
+			<button id="ident" title="Ident">-></button>
+			<button id="outdent" title="Outdent"><-</button>
+			<button id="code" title="Code">{}</button>
+			<button id="supButton" title="Superscript">X<sup>2</sup></button>
+			<button id="subButton" title="Subscript">X<sub>2</sub></button>
+			<button id="orderedListButton" title="Numbered List">(i)</button>
+			<button id="unorderedListButton" title="Bulleted List">&bull;</button>
+			<input type="color" id="fontColorButton" name="fontColorButton" title="Change Font Color">
+			<input type="color" id="highlightButton" title="Highlight Text">
+			<select id="fontChanger">
+				<option value="Times New Roman">Times New Roman</option>
+				<option value="Consolas">Consolas</option>
+				<option value="Cursive">Cursive</option>
+				<option value="Tahoma">Tahoma</option>
+				<option value="Monospace">Monospace</option>
+				<option value="Calibri">Calibri</option>
+			</select>
+			<select id="fontSizeChanger">
+				<script type="text/javascript">
+					for(var i=1; i<10; i++)
+					{
+						document.write("<option value='"+i+"''>"+i+"</option>")
+					}
+				</script>
+			</select>			
+			<button id="undoButton" title="Undo the previous action">&larr;</button>
+			<button id="redoButton" title="Redo">&rarr;</button>
+			
 
-		<button id="vis" onclick="visualizar()">Visualize</button>
 
-		<div id="exibir">
+
 			
 		</div>
+
+		<div id="richTextArea">
+			<iframe id="theWYSIWYG" name="theWYSIWYG" frameborder="0" spellcheck="false"></iframe>
+		</div>
+		
 	</div>
-
-
-	<div class="container" id="edição">
-		<h3>Editor</h3>
-		<hr class="padrão">
-
-		<button id="vis" onclick="limpar()">Clear</button>
-
-		<textarea id="editar">
-			
-		</textarea>
-	</div>
-	
-
 
 	<script type="text/javascript">
-		function renderizar()
+		var fonts = document.querySelectorAll("select#fontChanger > option");
+		for (var i=0; i< fonts.length; i++)
 		{
-			var codigo = document.getElementById("editar").value
-			codigo = codigo.replace("body", "div#exibir")
-			document.getElementById("exibir").innerHTML = codigo
-		}
-		document.getElementById("editar").addEventListener("keyup", renderizar, false);
-
-
-		function visualizar()
-		{
-			var win = window.open()
-			win.document.body.innerHTML = document.getElementById("editar").value
+			fonts[i].style.fontFamily = fonts[i].value;
 		}
 
-		function limpar()
-		{
-			document.getElementById("editar").value = ""
-			renderizar()
-		}
-
-
-		document.querySelector("textarea").addEventListener('keydown',function(e) {				
-		    	if (e.keyCode === 9){ // tab was pressed
-			        // get caret position/selection
-			        var start = this.selectionStart;
-			        var end = this.selectionEnd;
-
-			        var target = e.target;
-			        var value = target.value;
-
-			        // set textarea value to: text before caret + tab + text after caret
-			        target.value = value.substring(0, start)
-			                    + "    "
-			                    + value.substring(end);
-
-			        // put caret at right position again (add one for the tab)
-			        this.selectionStart = this.selectionEnd = start + 4;
-
-			        // prevent the focus lose
-			        e.preventDefault();
-		    	}
-		    
-		    	
-		    	
-		},false);
-		//document.getElementById('editar').value = "";
-		document.getElementById('editar').value = 
-`<style>
-	body {background-image: linear-gradient( black, #555); 
-	background-attachment:fixed; color:#fff; text-align:center;}
-
-</style>
-
-<h1>HTML-Render-Editor</h1>
-<hr>
-<p>Edit your HTML files, with CSS and JS support.</p>
-<p>Totally free to use, just get it!</p>`;
-
-		renderizar();
 	</script>
+
 </body>
 </html>
